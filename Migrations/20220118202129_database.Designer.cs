@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using shopify_backend.Models;
 
@@ -11,9 +12,10 @@ using shopify_backend.Models;
 namespace shopify_backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220118202129_database")]
+    partial class database
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace shopify_backend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ProductTag", b =>
-                {
-                    b.Property<int>("ProductsProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagsTagId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductsProductId", "TagsTagId");
-
-                    b.HasIndex("TagsTagId");
-
-                    b.ToTable("ProductTag");
-                });
 
             modelBuilder.Entity("shopify_backend.Models.Customer", b =>
                 {
@@ -114,10 +101,15 @@ namespace shopify_backend.Migrations
                     b.Property<int>("QuantityShipped")
                         .HasColumnType("int");
 
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
                     b.Property<double>("UnitPrice")
                         .HasColumnType("float");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("TagId");
 
                     b.ToTable("Products");
                 });
@@ -234,21 +226,6 @@ namespace shopify_backend.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("ProductTag", b =>
-                {
-                    b.HasOne("shopify_backend.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("shopify_backend.Models.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsTagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("shopify_backend.Models.Order", b =>
                 {
                     b.HasOne("shopify_backend.Models.Customer", "Customer")
@@ -258,6 +235,17 @@ namespace shopify_backend.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("shopify_backend.Models.Product", b =>
+                {
+                    b.HasOne("shopify_backend.Models.Tag", "Tag")
+                        .WithMany("Products")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("shopify_backend.Models.ProductOrder", b =>
@@ -318,6 +306,11 @@ namespace shopify_backend.Migrations
             modelBuilder.Entity("shopify_backend.Models.Supplier", b =>
                 {
                     b.Navigation("productSupplies");
+                });
+
+            modelBuilder.Entity("shopify_backend.Models.Tag", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
