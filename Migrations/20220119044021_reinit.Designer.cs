@@ -12,8 +12,8 @@ using shopify_backend.Models;
 namespace shopify_backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220118210620_tag-mtm")]
-    partial class tagmtm
+    [Migration("20220119044021_reinit")]
+    partial class reinit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

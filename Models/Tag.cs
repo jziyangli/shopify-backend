@@ -22,6 +22,6 @@ namespace shopify_backend.Models
         public string? Description { get; set; }
 
         //Relations
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product>? Products { get; set; }
     }
 }

@@ -39,13 +39,14 @@ namespace shopify_backend.Pages.Inventory
             {
                 return Page();
             }
-
+            int cnt = 0;
             IList<Tag> newTags = new List<Tag>();
             foreach (SelectListItem tag in TagList)
             {
                 if (tag.Selected)
                 {
                     //newTags.Add(new Tag { TagId = Convert.ToInt32(tag.Value) });
+                    cnt++;
                     newTags.Add(_context.Tags.Where(x => x.TagId == Convert.ToInt32(tag.Value)).FirstOrDefault());
                 }
             }

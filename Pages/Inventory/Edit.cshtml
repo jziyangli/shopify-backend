@@ -1,9 +1,10 @@
 ﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
 @model shopify_backend.Pages.Inventory.EditModel
 
-@{
-    ViewData["Title"] = "Edit";
-}
 
 <h1>Edit</h1>
 
@@ -48,6 +49,35 @@
                 <label asp-for="Product.PartNumber" class="control-label"></label>
                 <input asp-for="Product.PartNumber" class="form-control" />
                 <span asp-validation-for="Product.PartNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Tags" class="control-label"></label>
+                <span asp-validation-for="Product.Tags" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <div class="table">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                foreach (var tag in Model.TagList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedTags"
+                                               value="@tag.Value"
+                                               @(Html.Raw(tag.Selected ? "checked=\"checked\"" : "")) />
+                                               @tag.Value @:  @tag.Text
+                                    @:</td>
+                                }
+                                @:</tr>
+                            }
+                    </table>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

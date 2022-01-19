@@ -4,7 +4,7 @@
 
 namespace shopify_backend.Migrations
 {
-    public partial class tagmtm : Migration
+    public partial class reinit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
