@@ -4,11 +4,12 @@ namespace shopify_backend.Models
 {
     public class Tag
     {
+        /*public Tag() { }
         public Tag(int tagId)
         {
             this.TagId = tagId;
             this.Description = string.Empty;
-        }
+        }*/
 
         [Key]
         public int TagId { get; set; }
