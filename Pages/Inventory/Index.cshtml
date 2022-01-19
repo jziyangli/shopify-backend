@@ -8,8 +8,19 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<html>
 <h1>Inventory</h1>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Tag:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -30,10 +41,7 @@
                 @Html.DisplayNameFor(model => model.Product[0].Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product[0].QuantityShipped)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].QuantityReceived)
+                @Html.DisplayNameFor(model => model.Product[0].Tags)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Product[0].PartNumber)
@@ -42,35 +50,40 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Product) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuantityShipped)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QuantityReceived)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PartNumber)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Product)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @foreach (var tag in item.Tags)
+                    {
+                        <div>
+                            @tag.Name
+                        </div>
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PartNumber)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+</html>
