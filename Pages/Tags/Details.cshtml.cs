@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using shopify_backend.Models;
 
-namespace shopify_backend.Pages.Orders
+namespace shopify_backend.Pages.Tags
 {
     public class DetailsModel : PageModel
     {
@@ -19,7 +19,7 @@ namespace shopify_backend.Pages.Orders
             _context = context;
         }
 
-        public Order Order { get; set; }
+        public Tag Tag { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,9 +28,11 @@ namespace shopify_backend.Pages.Orders
                 return NotFound();
             }
 
-            Order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderId == id);
+            Tag = await _context.Tags
+                .Include(t => t.Products)
+                .FirstOrDefaultAsync(m => m.TagId == id);
 
-            if (Order == null)
+            if (Tag == null)
             {
                 return NotFound();
             }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using shopify_backend.Models;
 
-namespace shopify_backend.Pages.Orders
+namespace shopify_backend.Pages.Tags
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace shopify_backend.Pages.Orders
         }
 
         [BindProperty]
-        public Order Order { get; set; }
+        public Tag Tag { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,9 +30,9 @@ namespace shopify_backend.Pages.Orders
                 return NotFound();
             }
 
-            Order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderId == id);
+            Tag = await _context.Tags.FirstOrDefaultAsync(m => m.TagId == id);
 
-            if (Order == null)
+            if (Tag == null)
             {
                 return NotFound();
             }
@@ -48,7 +48,7 @@ namespace shopify_backend.Pages.Orders
                 return Page();
             }
 
-            _context.Attach(Order).State = EntityState.Modified;
+            _context.Attach(Tag).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +56,7 @@ namespace shopify_backend.Pages.Orders
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(Order.OrderId))
+                if (!TagExists(Tag.TagId))
                 {
                     return NotFound();
                 }
@@ -69,9 +69,9 @@ namespace shopify_backend.Pages.Orders
             return RedirectToPage("./Index");
         }
 
-        private bool OrderExists(int id)
+        private bool TagExists(int id)
         {
-            return _context.Orders.Any(e => e.OrderId == id);
+            return _context.Tags.Any(e => e.TagId == id);
         }
     }
 }

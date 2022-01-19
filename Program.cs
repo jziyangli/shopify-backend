@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using shopify_backend.Models;
 
@@ -8,6 +9,10 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddMvc().AddRazorPagesOptions(options =>
+{
+    options.Conventions.AddPageRoute("/Inventory/Index", "");
+});
 
 var app = builder.Build();
 
@@ -26,8 +31,11 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
+/*app.MapControllerRoute(
     name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");*/
+app.MapControllerRoute(
+    name: "page",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();

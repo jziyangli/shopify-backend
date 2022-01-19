@@ -9,10 +9,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Product Details</h1>
 
 <div>
-    <h4>Product</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -57,11 +56,20 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Product.PartNumber)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product.Tags):
+        </dt>
     </dl>
-
-    <h4>Order History</h4>
-    <h4>Supply History</h4>
+    <ul>
+        @foreach (var tag in Model.Product.Tags)
+        {
+            <li>
+                <a asp-page="/Tags/Details" asp-route-id="@tag.TagId">@Html.DisplayFor(modelItem => tag.Name)</a>
+            </li>
+        }
+    </ul>
 </div>
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Product.ProductId">Edit</a> |
     <a asp-page="./Index">Back to List</a>

@@ -28,7 +28,9 @@ namespace shopify_backend.Pages.Inventory
                 return NotFound();
             }
 
-            Product = await _context.Products.FirstOrDefaultAsync(m => m.ProductId == id);
+            Product = await _context.Products
+                .Include(p => p.Tags)
+                .FirstOrDefaultAsync(m => m.ProductId == id);
 
             if (Product == null)
             {

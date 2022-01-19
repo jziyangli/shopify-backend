@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using shopify_backend.Models;
 
-namespace shopify_backend.Pages.Orders
+namespace shopify_backend.Pages.Tags
 {
     public class IndexModel : PageModel
     {
@@ -19,11 +19,11 @@ namespace shopify_backend.Pages.Orders
             _context = context;
         }
 
-        public IList<Order> Order { get;set; }
+        public IList<Tag> Tag { get;set; }
 
         public async Task OnGetAsync()
         {
-            Order = await _context.Orders.ToListAsync();
+            Tag = await _context.Tags.ToListAsync();
         }
     }
 }

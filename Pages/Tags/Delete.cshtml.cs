@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using shopify_backend.Models;
 
-namespace shopify_backend.Pages.Orders
+namespace shopify_backend.Pages.Tags
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace shopify_backend.Pages.Orders
         }
 
         [BindProperty]
-        public Order Order { get; set; }
+        public Tag Tag { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,9 +29,9 @@ namespace shopify_backend.Pages.Orders
                 return NotFound();
             }
 
-            Order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderId == id);
+            Tag = await _context.Tags.FirstOrDefaultAsync(m => m.TagId == id);
 
-            if (Order == null)
+            if (Tag == null)
             {
                 return NotFound();
             }
@@ -45,11 +45,11 @@ namespace shopify_backend.Pages.Orders
                 return NotFound();
             }
 
-            Order = await _context.Orders.FindAsync(id);
+            Tag = await _context.Tags.FindAsync(id);
 
-            if (Order != null)
+            if (Tag != null)
             {
-                _context.Orders.Remove(Order);
+                _context.Tags.Remove(Tag);
                 await _context.SaveChangesAsync();
             }
 

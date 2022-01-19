@@ -69,7 +69,7 @@ namespace shopify_backend.Pages.Inventory
 
             if (productToUpdate == null) return NotFound();
 
-            if(await TryUpdateModelAsync<Product>(
+            if (await TryUpdateModelAsync<Product>(
                 productToUpdate,
                 "Product",
                 p => p.ProductName,
@@ -81,11 +81,14 @@ namespace shopify_backend.Pages.Inventory
                 p => p.PartNumber))
             {
                 //if(String.IsNullOrWhiteSpace(productToUpdate.))
+                productToUpdate.Quantity = productToUpdate.QuantityReceived - productToUpdate.QuantityShipped;
                 UpdateProductTags(selectedTags, productToUpdate);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");
             }
-            UpdateProductTags(selectedTags,productToUpdate);
+
+            productToUpdate.Quantity = productToUpdate.QuantityReceived - productToUpdate.QuantityShipped;
+            UpdateProductTags(selectedTags, productToUpdate);
             PopulateTagList(_context, productToUpdate);
             return RedirectToPage("./Index");
 
@@ -113,7 +116,7 @@ namespace shopify_backend.Pages.Inventory
 
         private void UpdateProductTags(string[] selectedTags, Product productToUpdate)
         {
-            if(selectedTags == null)
+            if (selectedTags == null)
             {
                 productToUpdate.Tags = new List<Tag>();
                 return;
@@ -122,7 +125,7 @@ namespace shopify_backend.Pages.Inventory
             var selectedTagSet = new HashSet<string>(selectedTags);
             var productTags = new HashSet<string>(
                 productToUpdate.Tags.Select(t => t.TagId.ToString()));
-            foreach(var tag in _context.Tags)
+            foreach (var tag in _context.Tags)
             {
                 string tagId = tag.TagId.ToString();
                 if (selectedTagSet.Contains(tagId))
@@ -131,7 +134,7 @@ namespace shopify_backend.Pages.Inventory
                 }
                 else
                 {
-                    if(productTags.Contains(tag.TagId.ToString()))
+                    if (productTags.Contains(tag.TagId.ToString()))
                     {
                         var remove = productToUpdate.Tags.Single(t => t.TagId == tag.TagId);
                         productToUpdate.Tags.Remove(remove);

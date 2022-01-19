@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using shopify_backend.Models;
 
-namespace shopify_backend.Pages.Orders
+namespace shopify_backend.Pages.Tags
 {
     public class CreateModel : PageModel
     {
@@ -25,7 +25,7 @@ namespace shopify_backend.Pages.Orders
         }
 
         [BindProperty]
-        public Order Order { get; set; }
+        public Tag Tag { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -35,7 +35,7 @@ namespace shopify_backend.Pages.Orders
                 return Page();
             }
 
-            _context.Orders.Add(Order);
+            _context.Tags.Add(Tag);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

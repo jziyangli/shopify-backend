@@ -1,0 +1,45 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+@model shopify_backend.Pages.Tags.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Tag Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tag.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tag.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tag.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tag.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tag.Products):
+        </dt>
+    </dl>
+    <ul>
+        @foreach (var product in Model.Tag.Products)
+        {
+            <li>
+                <a asp-page="/Inventory/Details" asp-route-id="@product.ProductId">@Html.DisplayFor(modelItem => product.ProductName)</a>
+            </li>
+        }
+    </ul>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Tag.TagId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
