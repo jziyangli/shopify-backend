@@ -1,6 +1,6 @@
 # shopify-backend
 ## How to run
-* Make sure that ASP.NET and web development is workload is installed under Visual Studio Installer
+* Make sure that ASP.NET and web development workload is installed under Visual Studio Installer
 * Clone the project and open in visual studio
 * If project is unloaded, right click and select 'Reload with Dependenies'
 * Open Package Manager Console under View->Other WIndows->Package Manager Console
